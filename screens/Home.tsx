@@ -38,26 +38,33 @@ export default function Home({navigation}){
         <View>
         <Button children={"Adicionar"} onPress={()=>{navigation.navigate('AddLivroScreen')}}></Button>
         <FlatList
-         data={dados}
-         renderItem={({item})=>
-         <Card style={estilo.cardEstilo}>
-            <Card.Title title={item.titulo}/>
-            <Card.Cover resizeMode="center" source={{ uri: `https://bibliotecaetecmaua.azurewebsites.net/Content/Images/${item.imagem}` }}></Card.Cover>
+            data={dados}
+            renderItem={
+                ({item}) => {
+                    if (!item.titulo) {
+                        return;
+                    }
+                    
+                    return (
+                        <Card style={estilo.cardEstilo}>
+                            <Card.Title title={item.titulo}/>
+                            <Card.Cover resizeMode="center" source={{ uri: `https://bibliotecaetecmaua.azurewebsites.net/Content/Images/${item.imagem}` }}></Card.Cover>
 
-            <Card.Content>
-                <Text>{item.autorPrincipal}</Text>
-                <Text>{item.editora}</Text>
-                <Button children={"Visualizar"} onPress={()=>{navigation.navigate('ViewLivroScreen',{id: item.id})}}></Button>
-            </Card.Content>     
-            
-            
-         </Card>
-            
-         }
+                            <Card.Content>
+                                <Text>{item.autorPrincipal}</Text>
+                                <Text>{item.editora}</Text>
+                                <Button children={"Visualizar"} onPress={()=>{navigation.navigate('ViewLivroScreen',{id: item.id})}}></Button>
+                            </Card.Content>     
+                            
+                            
+                        </Card>
+                    );
+                }
+            }
 
-         keyExtractor={(item)=>item.id.toString()}
+            keyExtractor={(item)=>item.id.toString()}
          
-         >
+        >
 
         </FlatList>
         
