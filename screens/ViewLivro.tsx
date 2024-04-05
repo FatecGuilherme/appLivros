@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-export default function ViewLivro({ route }) {
+export default function ViewLivro({ route }: { route: any }) {
   const { id } = route.params;
-  const [livro, setLivro] = useState(null);
+  const [livro, setLivro] = useState<any>(null);
 
   useEffect(() => {
     fetchLivro();
@@ -20,16 +20,113 @@ export default function ViewLivro({ route }) {
   };
 
   return (
-    <View>
+    <View style={[styles.container, {width: "auto"}]}>
       {livro && (
-        <>
-          <Text>{livro.titulo}</Text>
-          <Text>{livro.ano}</Text>          
-          <Text>{livro.editora}</Text>
-          <Text>{livro.autorPrincipal }</Text>
-          <Image source={{ uri: livro.imagem}} style={{ width: 100, height: 100 }} />
-        </>
+        <View style={styles.card}>
+
+          <View style={styles.descricao}>
+            <Text style={styles.titulo}>{livro.titulo}</Text>
+            <Text style={styles.ano}>Lançamento: {livro.ano}</Text>
+          </View>
+            
+          <View style={styles.content}>
+            <Image
+              resizeMode="contain"
+              source={{ uri: `https://bibliotecaetecmaua.azurewebsites.net/Content/Images/${livro.imagem}` }}
+              style={[styles.img, {width: 200, aspectRatio: 1}]}
+            />
+        
+
+            <View style={styles.texto}>
+           
+              <View style={styles.informacoes}>
+                <Text style={styles.label}>Assuntos: <Text style={styles.textLabel}>{livro.assuntos}</Text> </Text>
+                <Text style={styles.label}>Editora: <Text style={styles.textLabel}> {livro.editora}</Text></Text>
+                <Text style={styles.label}>Autor Principal: <Text style={styles.textLabel}> {livro.autorPrincipal}</Text></Text>
+                <Text style={styles.label}>Autores: <Text style={styles.textLabel}> {livro.autores}</Text></Text>
+                <Text style={styles.label}>Edição: <Text style={styles.textLabel}> {livro.edicao}</Text></Text>
+                <Text style={styles.label}>Editora: <Text style={styles.textLabel}> {livro.editora}</Text></Text>
+                <Text style={styles.label}>Id: <Text style={styles.textLabel}> {livro.id}</Text></Text>
+                <Text style={styles.label}>Idioma: <Text style={styles.textLabel}> {livro.idioma}</Text></Text>
+                <Text style={styles.label}>ISBN/ISSN: <Text style={styles.textLabel}> {livro.isbnIssn}</Text></Text>
+                <Text style={styles.label}>Material: <Text style={styles.textLabel}> {livro.material}</Text></Text>
+                <Text style={[styles.label, { marginBottom: 15 }]}>Obra: <Text style={styles.textLabel}> {livro.obra}</Text></Text>
+              </View>
+            </View>
+          </View>
+        </View>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f2f2f2',
+    display: 'flex',
+  },
+
+  content: {
+    flexDirection: 'row',
+  },
+  
+  img: {
+    // marginLeft:-50,
+    marginBottom: 20,
+    marginRight: 30,
+    marginLeft: 30,
+    display: 'flex',
+    // alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  card: {
+    backgroundColor: 'lightgray',
+    borderRadius: 20,
+    padding: 20,
+    margin: "auto",
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  texto: {
+    // alignItems: 'center',
+  },
+
+  descricao: {
+    marginBottom: 30,
+    marginTop: 10,
+  },
+  
+  titulo: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    marginBottom: 5,
+    textAlign: 'left',
+  },
+
+  ano: {
+    color: 'gray',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+
+  informacoes: {
+    width: '100%',
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center'
+  },
+
+  label: {
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+
+  textLabel : {
+    fontWeight:"normal"
+  }
+});
