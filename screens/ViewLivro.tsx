@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import axios from 'axios';
 
 export default function ViewLivro({ route }: { route: any }) {
@@ -30,29 +30,34 @@ export default function ViewLivro({ route }: { route: any }) {
           </View>
             
           <View style={styles.content}>
+            <View style={styles.texto}>
+           
+              <View style={styles.informacoes}>
+                <Text style={styles.label}>
+                  <Text style={styles.label}>ISBN/ISSN:<Text style={styles.textLabel}> {livro.isbnIssn}</Text></Text>     
+                  <Text style={styles.label}> | Editora: <Text style={styles.textLabel}> {livro.editora}</Text></Text>  
+                </Text> 
+
+                <Text style={styles.label}>Autor Principal: <Text style={styles.textLabel}> {livro.autorPrincipal}</Text></Text>
+                <Text style={styles.label}>Assuntos: <Text style={styles.textLabel}>{livro.assuntos}</Text> </Text>
+                <Text style={styles.label}>Autores: <Text style={styles.textLabel}> {livro.autores}</Text></Text>
+                
+                <Text style={styles.label}>
+                  <Text style={styles.label}>Edição: <Text style={styles.textLabel}> {livro.edicao}</Text></Text>
+                  <Text style={styles.label}> | Idioma: <Text style={styles.textLabel}> {livro.idioma}</Text></Text>
+                  <Text style={styles.label}> | Material: <Text style={styles.textLabel}> {livro.material}</Text></Text>
+                </Text>
+              
+                <Text style={[styles.label, { marginBottom: 15 }]}>Obra: <Text style={styles.textLabel}> {livro.obra}</Text></Text>
+              </View>
+            </View>
+
             <Image
               resizeMode="contain"
               source={{ uri: `https://bibliotecaetecmaua.azurewebsites.net/Content/Images/${livro.imagem}` }}
               style={[styles.img, {width: 200, aspectRatio: 1}]}
             />
-        
 
-            <View style={styles.texto}>
-           
-              <View style={styles.informacoes}>
-                <Text style={styles.label}>Assuntos: <Text style={styles.textLabel}>{livro.assuntos}</Text> </Text>
-                <Text style={styles.label}>Editora: <Text style={styles.textLabel}> {livro.editora}</Text></Text>
-                <Text style={styles.label}>Autor Principal: <Text style={styles.textLabel}> {livro.autorPrincipal}</Text></Text>
-                <Text style={styles.label}>Autores: <Text style={styles.textLabel}> {livro.autores}</Text></Text>
-                <Text style={styles.label}>Edição: <Text style={styles.textLabel}> {livro.edicao}</Text></Text>
-                <Text style={styles.label}>Editora: <Text style={styles.textLabel}> {livro.editora}</Text></Text>
-                <Text style={styles.label}>Id: <Text style={styles.textLabel}> {livro.id}</Text></Text>
-                <Text style={styles.label}>Idioma: <Text style={styles.textLabel}> {livro.idioma}</Text></Text>
-                <Text style={styles.label}>ISBN/ISSN: <Text style={styles.textLabel}> {livro.isbnIssn}</Text></Text>
-                <Text style={styles.label}>Material: <Text style={styles.textLabel}> {livro.material}</Text></Text>
-                <Text style={[styles.label, { marginBottom: 15 }]}>Obra: <Text style={styles.textLabel}> {livro.obra}</Text></Text>
-              </View>
-            </View>
           </View>
         </View>
       )}
@@ -60,15 +65,18 @@ export default function ViewLivro({ route }: { route: any }) {
   );
 }
 
+
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f2f2f2',
-    display: 'flex',
+    ...((Dimensions.get('window').width < 600) ? {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#673365',
+      display: 'flex',
+    } : {}),
   },
-
   content: {
     flexDirection: 'row',
   },
@@ -84,9 +92,10 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: 'lightgray',
+    backgroundColor: '#9a6296',
     borderRadius: 20,
     padding: 20,
+    //height:"80%",
     margin: "auto",
     alignItems: 'center',
     justifyContent: 'center'
@@ -109,7 +118,7 @@ const styles = StyleSheet.create({
   },
 
   ano: {
-    color: 'gray',
+    color: 'white',
     fontSize: 16,
     textAlign: 'center',
   },
@@ -128,5 +137,5 @@ const styles = StyleSheet.create({
 
   textLabel : {
     fontWeight:"normal"
-  }
+  },
 });
